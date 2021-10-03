@@ -3,9 +3,9 @@ import { ApiService } from './api.service';
 import { ApiController } from './api.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FileSchema } from './schemas/file.schema';
-import { CleanUpService, FileService } from 'src/services';
-import { LocalFileStorageService } from 'src/services/localFileStorage/localFileStorage.service';
-import { GoogleFileStorageService } from 'src/services/googleFileStorage/googleFileStorage.service';
+import { CleanUpService, FileService } from '../services';
+import { LocalFileStorageService } from '../services/localFileStorage/localFileStorage.service';
+import { GoogleFileStorageService } from '../services/googleFileStorage/googleFileStorage.service';
 
 @Module({
   imports: [

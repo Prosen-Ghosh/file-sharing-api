@@ -1,4 +1,4 @@
-import { StorageType } from "src/common/enums/StorageType.enum";
+import { StorageType } from "../common/enums/StorageType.enum";
 
 export default () => ({
     port: parseInt(process.env.PORT, 10),
