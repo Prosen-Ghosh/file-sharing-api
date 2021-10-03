@@ -32,7 +32,7 @@ export class ApiService {
         });
     }
 
-    async removeByPublicKey(publicKey: string): Promise<IFile> {
+    async removeByPublicKey(publicKey: string): Promise<any> {
         const privateKey = getHash(`PRIVATE_SECRET_${publicKey}`, 'sha512')
         const file: IFile = await this.fileModel.findOne({
             privateKey
@@ -41,7 +41,7 @@ export class ApiService {
         if (file) {
             unlinkSync(file.path);
 
-            return await this.fileModel.remove({
+            return await this.fileModel.deleteOne({
                 privateKey
             });
         }

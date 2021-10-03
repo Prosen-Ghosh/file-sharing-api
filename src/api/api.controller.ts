@@ -6,10 +6,17 @@ import { ApiService } from './api.service';
 import { getHash } from 'src/common/utils';
 import { Response } from 'express';
 import { IFile } from './interfaces/file.interfaces';
+import { CleanUpService } from 'src/services';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('files')
 export class ApiController {
-  constructor(private readonly apiService: ApiService) { }
+  constructor(
+    private readonly apiService: ApiService,
+    private readonly cleanUpService: CleanUpService,
+    private readonly configService: ConfigService) { 
+      this.cleanUpService.addInterval('File Clean Up', this.configService.get('inactivity'))
+    }
 
   @Post()
   @UseInterceptors(FilesInterceptor('files', 10, {

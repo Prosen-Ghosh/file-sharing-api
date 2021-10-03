@@ -6,4 +6,5 @@ export default () => ({
     folderPath: process.env.FOLDER || 'uploads',
     // config: process.env.CONFIG,
     provider: process.env.PROVIDER || StorageType.Local,
+    inactivity: parseInt(process.env.PERIOD_OF_INACTIVITY_IN_MILLISECONDS) || 3000
 });
