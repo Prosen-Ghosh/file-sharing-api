@@ -15,7 +15,7 @@ export class CleanUpService {
         private confgService: ConfigService,
         private fileService: FileService
     ) { }
-    addInterval(name: string, milliseconds: number = this.confgService.get('inactivity')) {
+    addInterval(name: string, milliseconds: number = this.confgService.get<number>('inactivity')) {
         const callback = async () => {
             this.logger.debug(`Interval ${name} executing at time (${milliseconds})!`);
             const data: IFile[] = await this.fileModel.find({});

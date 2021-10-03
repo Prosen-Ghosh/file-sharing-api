@@ -27,11 +27,6 @@ export const FileSchema = new mongoose.Schema({
         trim: true,
         required: true,
         default: StorageType.Local
-    },
-    lastVisited: {
-        type: Date,
-        required: true,
-        default: Date.now
     }
 }, {
     timestamps: true,

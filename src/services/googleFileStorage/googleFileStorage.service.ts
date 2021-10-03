@@ -13,10 +13,10 @@ export class GoogleFileStorageService {
     private logger = new Logger(GoogleFileStorageService.name);
     private folderPath: string;
     constructor(
-        private localFileStorageService: LocalFileStorageService,
+        // private localFileStorageService: LocalFileStorageService,
         private config: ConfigService,
     ) {
-        this.folderPath = this.config.get('folderPath');
+        this.folderPath = this.config.get<string>('folderPath');
 
     }
     async saveFiles(files: Array<Express.Multer.File>, publicKey: string): Promise<void> {

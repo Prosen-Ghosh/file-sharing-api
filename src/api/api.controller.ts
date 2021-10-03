@@ -3,10 +3,10 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { ApiService } from './api.service';
-import { getHash } from 'src/common/utils';
+import { getHash } from '../common/utils';
 import { Response } from 'express';
 import { IFile } from './interfaces/file.interfaces';
-import { CleanUpService } from 'src/services';
+import { CleanUpService } from '../services';
 import { ConfigService } from '@nestjs/config';
 
 @Controller('files')

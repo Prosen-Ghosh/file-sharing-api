@@ -1,9 +1,9 @@
 import { BadRequestException, ConflictException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { unlinkSync } from 'fs';
-import { IFile } from 'src/api/interfaces/file.interfaces';
+import { IFile } from '../../api/interfaces/file.interfaces';
 import { StorageType } from '../../common/enums/StorageType.enum';
-import { getHash } from 'src/common/utils';
+import { getHash } from '../../common/utils';
 import { LocalFileStorageService } from './../localFileStorage/localFileStorage.service';
 import { GoogleFileStorageService } from '../googleFileStorage/googleFileStorage.service';
 import * as fs from 'fs';
@@ -13,18 +13,16 @@ export class FileService {
   private readonly logger = new Logger(FileService.name);
 
   private folderPath: string;
-  private activePeriod: number;
   constructor(
     private config: ConfigService,
     private localFileStorageService: LocalFileStorageService,
     private googleFileStorageService: GoogleFileStorageService,
   ) {
-    this.folderPath = this.config.get('folderPath');
-    this.activePeriod = this.config.get('activePeriod');
+    this.folderPath = this.config.get<string>('folderPath');
   }
   async save(files: Array<Express.Multer.File>): Promise<IFile[]> {
     try {
-      let provider: StorageType = this.config.get('provider');
+      let provider: StorageType = this.config.get<StorageType>('provider');
       const { privateKey, publicKey } = this.generateKeys()
       let data: IFile[] = files.map((item) => {
         let path = `${this.folderPath}/${item.filename}`

@@ -12,11 +12,11 @@ export class LocalFileStorageService {
     private logger = new Logger(LocalFileStorageService.name);
     private folderPath: string;
     constructor(
-        private config: ConfigService,
+        private configService: ConfigService,
     ) {
-        this.folderPath = this.config.get('folderPath');
+        this.folderPath = this.configService.get<string>('folderPath');
         // createing folder if not exist
-        if (!fs.existsSync(this.folderPath)){
+        if (this.folderPath && !fs.existsSync(this.folderPath)){
             fs.mkdirSync(this.folderPath, { recursive: true });
         }
     }
