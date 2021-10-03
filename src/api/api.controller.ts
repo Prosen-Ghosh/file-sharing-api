@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Param, Post, Res, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post, Res, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
@@ -8,6 +8,7 @@ import { Response } from 'express';
 import { IFile } from './interfaces/file.interfaces';
 import { CleanUpService } from '../services';
 import { ConfigService } from '@nestjs/config';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @Controller('files')
 export class ApiController {
@@ -19,6 +20,7 @@ export class ApiController {
     }
 
   @Post()
+  @UseGuards(ThrottlerGuard)
   @UseInterceptors(FilesInterceptor('files', 10, {
     storage: diskStorage({ //setting up file saving configuration
       filename: (req, file, cb) => {
@@ -35,6 +37,7 @@ export class ApiController {
   }
 
   @Get(':publicKey')
+  @UseGuards(ThrottlerGuard)
   async getFiles(@Param('publicKey') publicKey: string, @Res() res: Response): Promise<any> {
     console.log("publicKey: ", publicKey)
     const data: IFile = await this.apiService.findByPublicKey(publicKey);
@@ -48,6 +51,7 @@ export class ApiController {
   }
 
   @Delete(':publicKey')
+  @UseGuards(ThrottlerGuard)
   async deleteFiles(@Param('publicKey') publicKey: string, @Res() res: Response): Promise<any> {
     try {
       const data = await this.apiService.removeByPublicKey(publicKey);
