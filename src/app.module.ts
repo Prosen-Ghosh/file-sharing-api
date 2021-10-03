@@ -19,7 +19,7 @@ import { APP_GUARD } from '@nestjs/core';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         ttl: config.get<number>('THROTTLE_TTL'),
-        limit: config.get<number>('THROTTLE_LIMIT'),
+        limit: config.get<number>('UPLOAD_LIMIT'),
       }),
     }),
     MulterModule.registerAsync({

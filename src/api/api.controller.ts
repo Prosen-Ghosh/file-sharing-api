@@ -31,9 +31,9 @@ export class ApiController {
       destination: process.env.FOLDER || 'uploads'
     })
   }))
-  async saveFiles(@UploadedFiles() files: Array<Express.Multer.File>): Promise<{ publicKey: string; privateKey: string; }> {
+  async saveFiles(@UploadedFiles() files: Array<Express.Multer.File>, @Res() res: Response): Promise<any> {
     const { publicKey, privateKey } = await this.apiService.saveFile(files);
-    return { publicKey, privateKey };
+    return res.status(201).send( { publicKey, privateKey });
   }
 
   @Get(':publicKey')
